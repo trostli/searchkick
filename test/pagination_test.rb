@@ -82,6 +82,12 @@ class PaginationTest < Minitest::Test
     assert_equal 4, products.total_entries
   end
 
+  def test_max_total_entries
+    store_names ["Product A", "Product B", "Product C", "Product D", "Product E"]
+    products = Product.search("product", max_total_entries: 2)
+    assert_equal 2, products.total_entries
+  end
+
   def test_kaminari
     require "action_view"
 

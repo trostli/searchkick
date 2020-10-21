@@ -10,7 +10,7 @@ module Searchkick
     def_delegators :execute, :map, :each, :any?, :empty?, :size, :length, :slice, :[], :to_ary,
       :records, :results, :suggestions, :each_with_hit, :with_details, :aggregations, :aggs,
       :took, :error, :model_name, :entry_name, :total_count, :total_entries,
-      :current_page, :per_page, :limit_value, :padding, :total_pages, :num_pages,
+      :current_page, :per_page, :limit_value, :padding, :total_pages, :max_total_entries, :num_pages,
       :offset_value, :offset, :previous_page, :prev_page, :next_page, :first_page?, :last_page?,
       :out_of_range?, :hits, :response, :to_a, :first, :scroll
 
@@ -19,7 +19,7 @@ module Searchkick
         :boost_by, :boost_by_distance, :boost_by_recency, :boost_where, :conversions, :conversions_term, :debug, :emoji, :exclude, :execute, :explain,
         :fields, :highlight, :includes, :index_name, :indices_boost, :limit, :load,
         :match, :misspellings, :models, :model_includes, :offset, :operator, :order, :padding, :page, :per_page, :profile,
-        :request_params, :routing, :scope_results, :scroll, :select, :similar, :smart_aggs, :suggest, :total_entries, :track, :type, :where]
+        :request_params, :routing, :scope_results, :scroll, :select, :similar, :smart_aggs, :suggest, :total_entries, :max_total_entries, :track, :type, :where]
       raise ArgumentError, "unknown keywords: #{unknown_keywords.join(", ")}" if unknown_keywords.any?
 
       term = term.to_s
@@ -134,6 +134,7 @@ module Searchkick
         term: term,
         scope_results: options[:scope_results],
         total_entries: options[:total_entries],
+        max_total_entries: options[:max_total_entries],
         index_mapping: @index_mapping,
         suggest: options[:suggest],
         scroll: options[:scroll]

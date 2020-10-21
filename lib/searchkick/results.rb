@@ -145,12 +145,14 @@ module Searchkick
 
     def total_count
       if options[:total_entries]
-        options[:total_entries]
+        total_count = options[:total_entries]
       elsif response["hits"]["total"].is_a?(Hash)
-        response["hits"]["total"]["value"]
+        total_count = response["hits"]["total"]["value"]
       else
-        response["hits"]["total"]
+        total_count = response["hits"]["total"]
       end
+
+      options[:max_total_entries] ? [options[:max_total_entries], total_count].min : total_count
     end
     alias_method :total_entries, :total_count
 
